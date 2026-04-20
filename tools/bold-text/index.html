@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facebook Bold Text Generator | QuickTools</title>
+    <link rel="stylesheet" href="../../assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            background: #f8fafc;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--border-color);
+            margin-bottom: 1rem;
+            transition: var(--transition);
+        }
+        .result-item:hover {
+            border-color: var(--primary-emerald);
+            background: #fff;
+        }
+        .result-text {
+            font-size: 1.2rem;
+            word-break: break-all;
+        }
+        .copy-btn {
+            background: var(--primary-gradient);
+            color: white;
+            padding: 0.5rem 1rem;
+            font-size: 0.8rem;
+        }
+        .style-label {
+            display: block;
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-bottom: 0.25rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        #text-input {
+            font-size: 1.2rem;
+            padding: 1rem;
+            height: 120px;
+            margin-bottom: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container nav-content">
+            <a href="../../index.html" class="logo">QuickTools</a>
+            <nav><a href="../../index.html" class="btn">Back to Home</a></nav>
+        </div>
+    </header>
+
+    <main class="container tool-container">
+        <div class="tool-header">
+            <h1>Facebook <span class="gradient-text">Bold Text</span> Generator</h1>
+            <p>Generate stylish text for Facebook, Instagram, and Twitter posts.</p>
+        </div>
+
+        <div class="card">
+            <div class="form-group">
+                <label>Input Text</label>
+                <textarea id="text-input" placeholder="Type or paste your text here..." autofocus>Hello World!</textarea>
+            </div>
+
+            <div id="results">
+                <!-- Results will be injected here -->
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const input = document.getElementById('text-input');
+        const results = document.getElementById('results');
+
+        const MAP = {
+            bold_serif: {
+                upper: '𝐀𝐁𝐂𝐃𝐄𝐅𝐆𝐇𝐈𝐉𝐊𝐋𝐌𝐍𝐎𝐏𝐐𝐑𝐒𝐓𝐔𝐕𝐖𝐗𝐘𝐙',
+                lower: '𝐚𝐛𝐜𝐝𝐞𝐟𝐠𝐡𝐢𝐣𝐤𝐥𝐦𝐧𝐨𝐩𝐪𝐫𝐬𝐭𝐮𝐯𝐰𝐱𝐲𝐳',
+                digits: '𝟎𝟏𝟐𝟑𝟒𝟓𝟔𝟕𝟖𝟗'
+            },
+            bold_sans: {
+                upper: '𝗔𝗕𝗖𝗗𝗘𝗙𝗚𝗛𝗜𝗝𝗞𝗟𝗠𝗡𝗢𝗣𝗤𝗥𝗦𝗧𝗨𝗩𝗪𝗫𝗬𝗭',
+                lower: '𝗮𝗯𝗰𝗱𝗲𝗳𝗴𝗵𝗶𝗷𝗸𝗹𝗺𝗻𝗼𝗽𝗾𝗿𝘀𝘁𝘂𝘃𝘄𝘅𝘆𝘇',
+                digits: '𝟬𝟭𝟮𝟯𝟰𝟱𝟲𝟳𝟴𝟵'
+            },
+            italic_serif: {
+                upper: '𝐴𝐵𝐶𝐷𝐸𝐹𝐺𝐻𝐼𝐽𝐾𝐿𝑀𝑁𝑂𝑃𝑄𝑅𝑆𝑇𝑈𝑉𝑊𝑋𝑌𝑍',
+                lower: '𝑎𝑏𝑐𝑑𝑒𝑓𝑔ℎ𝑖𝑗𝑘𝑙𝑚𝑛𝑜𝑝𝑞𝑟𝑠𝑡𝑢𝑣𝑤𝑥𝑦𝑧'
+            },
+            bold_italic_serif: {
+                upper: '𝑨𑑑𝑪𝑫𝑬𝑭𝑮𝑯𝑰𝑱𝑲𝑳𝑴𝑵𝑶𝑷𝑸𝑹𝑺𝑻𝑼𝑽𝑾𝑿𝒀𝒁',
+                lower: '𝒂𝒃𝒄𝒅𝒆𝒇𝒈𝒉𝒊𝒋𝒌𝒍𝒎𝒏𝒐𝒑𝒒𝒓𝒔𝒕𝒖𝒗𝒘𝒙𝒚𝒛'
+            },
+            script: {
+                upper: '𝒜ℬ𝒞𝒟ℰℱ𝒢ℋℐ𝒥𝒦ℒℳ𝒩𝒪𝒫𝒬ℛ𝒮𝒯𝒰𝒱𝒲𝒳𝒴𝒵',
+                lower: '𝒶𝒷𝒸𝒹ℯ𝒻ℊ𝒽𝒾𝒿𝓀𝓁𝓂𝓃ℴ𝓅𝓆𝓇𝓈𝓉𝓊𝓋𝓌𝓍𝓎𝓏'
+            },
+            monospace: {
+                upper: '𝙰𝙱𝙲𝙳𝙴𝙵𝙶𝙷𝙸𝙹𝙺𝙻𝙼𝙽𝙾𝙿𝚀𝚁𝚂𝚃𝚄𝚅𝚆𝚇𝚈𝚉',
+                lower: '𝚊𝚋𝚌𝚍𝚎𝚏𝚐𝚑𝚒𝚓𝚔𝚕𝚖𝚗𝚘𝚙𝚚𝚛𝚜𝚝𝚞𝚟𝚠𝚡𝚢𝚣',
+                digits: '𝟶𝟷𝟸𝟹𝟺𝟻𝟼𝟽𝟾𝟿'
+            }
+        };
+
+        const NORMAL_UPPER = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        const NORMAL_LOWER = 'abcdefghijklmnopqrstuvwxyz';
+        const NORMAL_DIGITS = '0123456789';
+
+        function transform(text, style) {
+            let res = '';
+            const map = MAP[style];
+            for (let char of text) {
+                const upperIdx = NORMAL_UPPER.indexOf(char);
+                const lowerIdx = NORMAL_LOWER.indexOf(char);
+                const digitIdx = NORMAL_DIGITS.indexOf(char);
+
+                if (upperIdx !== -1 && map.upper) {
+                    res += Array.from(map.upper)[upperIdx];
+                } else if (lowerIdx !== -1 && map.lower) {
+                    res += Array.from(map.lower)[lowerIdx];
+                } else if (digitIdx !== -1 && map.digits) {
+                    res += Array.from(map.digits)[digitIdx];
+                } else {
+                    res += char;
+                }
+            }
+            return res;
+        }
+
+        function updateResults() {
+            const text = input.value;
+            results.innerHTML = '';
+
+            const styles = [
+                { id: 'bold_serif', name: 'Bold Serif' },
+                { id: 'bold_sans', name: 'Bold Sans' },
+                { id: 'italic_serif', name: 'Italic Serif' },
+                { id: 'bold_italic_serif', name: 'Bold Italic' },
+                { id: 'script', name: 'Script/Cursive' },
+                { id: 'monospace', name: 'Monospace' }
+            ];
+
+            styles.forEach(style => {
+                const transformed = transform(text, style.id);
+                const item = document.createElement('div');
+                item.className = 'result-item';
+                item.innerHTML = `
+                    <div style="flex: 1;">
+                        <span class="style-label">${style.name}</span>
+                        <div class="result-text">${transformed}</div>
+                    </div>
+                    <button class="btn copy-btn" data-text="${transformed}">Copy</button>
+                `;
+                results.appendChild(item);
+            });
+
+            // Re-attach copy listeners
+            document.querySelectorAll('.copy-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const textToCopy = btn.getAttribute('data-text');
+                    navigator.clipboard.writeText(textToCopy).then(() => {
+                        const originalText = btn.innerHTML;
+                        btn.innerHTML = '<i class="fa-solid fa-check"></i> Copied';
+                        btn.style.background = '#059669';
+                        setTimeout(() => {
+                            btn.innerHTML = originalText;
+                            btn.style.background = '';
+                        }, 2000);
+                    });
+                });
+            });
+        }
+
+        input.addEventListener('input', updateResults);
+        updateResults();
+    </script>
+</body>
+</html>

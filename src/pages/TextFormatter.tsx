@@ -1,43 +1,25 @@
-import { useState, useCallback } from 'react'
+import { useState } from 'react'
 import { applyStyle, styleNames } from '../utils/unicodeStyles'
 
 const styleKeys = Object.keys(styleNames) as string[]
 
 export default function TextFormatter() {
-  const [inputText, setInputText] = useState('')
-  const [selectedStyle, setSelectedStyle] = useState('bold-sans')
+  const [inputText, setInputText] = useState('Hello World!')
   const [toast, setToast] = useState('')
-
-  const styledText = useCallback(() => {
-    if (!inputText) return ''
-    return applyStyle(inputText, selectedStyle)
-  }, [inputText, selectedStyle])()
-
-  const charCount = inputText.length
 
   const showToast = (message: string) => {
     setToast(message)
     setTimeout(() => setToast(''), 3000)
   }
 
-  const copyToClipboard = async () => {
-    if (!styledText) {
+  const copyToClipboard = async (text: string) => {
+    if (!text) {
       showToast('Nothing to copy!')
       return
     }
 
-    try {
-      await navigator.clipboard.writeText(styledText)
-      showToast('Copied to clipboard!')
-    } catch {
-      const textarea = document.createElement('textarea')
-      textarea.value = styledText
-      document.body.appendChild(textarea)
-      textarea.select()
-      document.execCommand('copy')
-      document.body.removeChild(textarea)
-      showToast('Copied to clipboard!')
-    }
+    await navigator.clipboard.writeText(text)
+    showToast('Copied to clipboard!')
   }
 
   return (
@@ -48,57 +30,39 @@ export default function TextFormatter() {
       </div>
 
       <div className="card">
-        <div className="qr-section">
-          <div className="qr-inputs">
-            <h3>Input</h3>
-            <div className="form-group" style={{ marginTop: '1rem' }}>
-              <label>Enter Text</label>
-              <textarea
-                rows={5}
-                placeholder="Type your text here..."
-                value={inputText}
-                onChange={(e) => setInputText(e.target.value)}
-              />
-              <div style={{ textAlign: 'right', fontSize: '0.85rem', color: 'var(--text-muted)', marginTop: '0.5rem' }}>
-                {charCount} characters
-              </div>
-            </div>
+        <div className="form-group" style={{ marginBottom: '2rem' }}>
+          <label>Enter Your Text</label>
+          <textarea
+            rows={4}
+            placeholder="Type or paste your text here..."
+            value={inputText}
+            onChange={(e) => setInputText(e.target.value)}
+            style={{ fontSize: '1.25rem', padding: '1rem' }}
+          />
+          <div style={{ textAlign: 'right', fontSize: '0.85rem', color: 'var(--text-muted)', marginTop: '0.5rem' }}>
+            {inputText.length} characters
+          </div>
+        </div>
 
-            <h3>Select Style</h3>
-            <div className="tabs" style={{ marginTop: '1rem', flexWrap: 'wrap' }}>
-              {styleKeys.map((key) => (
-                <button
-                  key={key}
-                  className={`tab ${selectedStyle === key ? 'active' : ''}`}
-                  onClick={() => setSelectedStyle(key)}
-                  style={{ marginBottom: '0.5rem' }}
+        <div className="results-grid">
+          {styleKeys.map((key) => {
+            const styledText = applyStyle(inputText || 'Sample Text', key)
+            return (
+              <div key={key} className="result-item">
+                <div style={{ flex: 1, marginRight: '1rem' }}>
+                  <span className="style-label">{styleNames[key]}</span>
+                  <div className="result-text">{styledText}</div>
+                </div>
+                <button 
+                  className="btn btn-primary" 
+                  onClick={() => copyToClipboard(styledText)}
+                  style={{ padding: '0.5rem 1rem', fontSize: '0.875rem' }}
                 >
-                  {styleNames[key]}
+                  <i className="fa-solid fa-copy"></i> &nbsp; Copy
                 </button>
-              ))}
-            </div>
-          </div>
-
-          <div className="qr-preview-container">
-            <h3>Preview</h3>
-            <div style={{ 
-              width: '100%', 
-              background: '#f9fafb', 
-              padding: '1.5rem', 
-              borderRadius: 'var(--radius-lg)', 
-              minHeight: '150px',
-              marginTop: '1rem',
-              border: '1px solid var(--border-color)',
-              wordBreak: 'break-word',
-              fontSize: '1.25rem'
-            }}>
-              {styledText || <span style={{ color: 'var(--text-muted)' }}>Your styled text will appear here...</span>}
-            </div>
-            
-            <button className="btn btn-primary" style={{ width: '100%', marginTop: '1.5rem' }} onClick={copyToClipboard}>
-              <i className="fa-solid fa-copy"></i> &nbsp; Copy to Clipboard
-            </button>
-          </div>
+              </div>
+            )
+          })}
         </div>
       </div>
 

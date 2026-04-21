@@ -139,33 +139,40 @@ END:VCARD`
       case 'url':
         return (
           <div className="form-group">
-            <label>Website URL</label>
+            <label htmlFor="qrUrl">Website URL</label>
             <input
+              id="qrUrl"
               type="url"
               placeholder="https://example.com"
               value={formData.url}
               onChange={(e) => setFormData({ ...formData, url: e.target.value })}
+              required
             />
+            {!formData.url && <small style={{ color: 'var(--primary)', opacity: 0.7 }}>URL is required for generation</small>}
           </div>
         )
       case 'text':
         return (
           <div className="form-group">
-            <label>Plain Text</label>
+            <label htmlFor="qrText">Plain Text</label>
             <textarea
+              id="qrText"
               rows={4}
               placeholder="Enter your text..."
               value={formData.text}
               onChange={(e) => setFormData({ ...formData, text: e.target.value })}
+              required
             />
+            {!formData.text && <small style={{ color: 'var(--primary)', opacity: 0.7 }}>Text is required for generation</small>}
           </div>
         )
       case 'email':
         return (
           <>
             <div className="form-group">
-              <label>Email Address</label>
+              <label htmlFor="qrEmail">Email Address</label>
               <input
+                id="qrEmail"
                 type="email"
                 placeholder="email@example.com"
                 value={formData.email}
@@ -173,8 +180,9 @@ END:VCARD`
               />
             </div>
             <div className="form-group">
-              <label>Subject (optional)</label>
+              <label htmlFor="qrEmailSubject">Subject (optional)</label>
               <input
+                id="qrEmailSubject"
                 type="text"
                 placeholder="Email subject"
                 value={formData.emailSubject}
@@ -182,8 +190,9 @@ END:VCARD`
               />
             </div>
             <div className="form-group">
-              <label>Body (optional)</label>
+              <label htmlFor="qrEmailBody">Body (optional)</label>
               <textarea
+                id="qrEmailBody"
                 placeholder="Email body"
                 value={formData.emailBody}
                 onChange={(e) => setFormData({ ...formData, emailBody: e.target.value })}
@@ -195,8 +204,9 @@ END:VCARD`
         return (
           <>
             <div className="form-group">
-              <label>Phone Number</label>
+              <label htmlFor="qrSmsNumber">Phone Number</label>
               <input
+                id="qrSmsNumber"
                 type="tel"
                 placeholder="+1234567890"
                 value={formData.smsNumber}
@@ -204,8 +214,9 @@ END:VCARD`
               />
             </div>
             <div className="form-group">
-              <label>Message (optional)</label>
+              <label htmlFor="qrSmsMessage">Message (optional)</label>
               <textarea
+                id="qrSmsMessage"
                 placeholder="SMS message"
                 value={formData.smsMessage}
                 onChange={(e) => setFormData({ ...formData, smsMessage: e.target.value })}
@@ -217,8 +228,9 @@ END:VCARD`
         return (
           <>
             <div className="form-group">
-              <label>Network Name (SSID)</label>
+              <label htmlFor="qrWifiSSID">Network Name (SSID)</label>
               <input
+                id="qrWifiSSID"
                 type="text"
                 placeholder="WiFi Network Name"
                 value={formData.wifiSSID}
@@ -226,8 +238,9 @@ END:VCARD`
               />
             </div>
             <div className="form-group">
-              <label>Password</label>
+              <label htmlFor="qrWifiPassword">Password</label>
               <input
+                id="qrWifiPassword"
                 type="text"
                 placeholder="WiFi Password"
                 value={formData.wifiPassword}
@@ -235,8 +248,9 @@ END:VCARD`
               />
             </div>
             <div className="form-group">
-              <label>Encryption</label>
+              <label htmlFor="qrWifiEncryption">Encryption</label>
               <select
+                id="qrWifiEncryption"
                 value={formData.wifiEncryption}
                 onChange={(e) => setFormData({ ...formData, wifiEncryption: e.target.value })}
               >
@@ -251,8 +265,9 @@ END:VCARD`
         return (
           <>
             <div className="form-group">
-              <label>Name</label>
+              <label htmlFor="vcardName">Name</label>
               <input
+                id="vcardName"
                 type="text"
                 placeholder="John Doe"
                 value={formData.vcardName}
@@ -260,8 +275,9 @@ END:VCARD`
               />
             </div>
             <div className="form-group">
-              <label>Phone</label>
+              <label htmlFor="vcardPhone">Phone</label>
               <input
+                id="vcardPhone"
                 type="tel"
                 placeholder="+1234567890"
                 value={formData.vcardPhone}
@@ -269,12 +285,33 @@ END:VCARD`
               />
             </div>
             <div className="form-group">
-              <label>Email</label>
+              <label htmlFor="vcardEmail">Email</label>
               <input
+                id="vcardEmail"
                 type="email"
                 placeholder="email@example.com"
                 value={formData.vcardEmail}
                 onChange={(e) => setFormData({ ...formData, vcardEmail: e.target.value })}
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="vcardOrg">Organization</label>
+              <input
+                id="vcardOrg"
+                type="text"
+                placeholder="Company Name"
+                value={formData.vcardOrg}
+                onChange={(e) => setFormData({ ...formData, vcardOrg: e.target.value })}
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="vcardTitle">Job Title</label>
+              <input
+                id="vcardTitle"
+                type="text"
+                placeholder="Software Engineer"
+                value={formData.vcardTitle}
+                onChange={(e) => setFormData({ ...formData, vcardTitle: e.target.value })}
               />
             </div>
           </>
@@ -296,6 +333,9 @@ END:VCARD`
               key={type}
               className={`tab ${qrType === type ? 'active' : ''}`}
               onClick={() => setQrType(type)}
+              aria-label={`Select ${type} QR type`}
+              aria-selected={qrType === type}
+              role="tab"
             >
               <i className={`fa-solid ${
                 type === 'url' ? 'fa-link' : 
@@ -303,7 +343,7 @@ END:VCARD`
                 type === 'wifi' ? 'fa-wifi' : 
                 type === 'vcard' ? 'fa-address-card' : 
                 type === 'email' ? 'fa-envelope' : 'fa-comment'
-              }`}></i> &nbsp;
+              }`} aria-hidden="true"></i> &nbsp;
               {type.toUpperCase()}
             </button>
           ))}

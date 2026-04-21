@@ -4,12 +4,14 @@ import Home from './pages/Home'
 import QRGenerator from './pages/QRGenerator'
 import TextFormatter from './pages/TextFormatter'
 import ErrorBoundary from './components/ErrorBoundary'
+import ScrollToTop from './components/ScrollToTop'
 import './App.css'
 
 function App() {
   return (
     <ErrorBoundary>
       <BrowserRouter basename="/QuickTools/">
+        <ScrollToTop />
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />

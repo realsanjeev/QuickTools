@@ -7,13 +7,13 @@
         <priority>1.0</priority>
     </url>
     <url>
-        <loc>https://realsanjeev.github.io/QuickTools/tools/qr-generator/</loc>
+        <loc>https://realsanjeev.github.io/QuickTools/qr-generator</loc>
         <lastmod>2026-04-21</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
-        <loc>https://realsanjeev.github.io/QuickTools/tools/bold-text/</loc>
+        <loc>https://realsanjeev.github.io/QuickTools/text-formatter</loc>
         <lastmod>2026-04-21</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>

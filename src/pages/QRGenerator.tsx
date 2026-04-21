@@ -138,32 +138,27 @@ END:VCARD`
     switch (qrType) {
       case 'url':
         return (
-          <>
-            <div className="form-group">
-              <label>URL</label>
-              <input
-                type="url"
-                className="form-input"
-                placeholder="https://example.com"
-                value={formData.url}
-                onChange={(e) => setFormData({ ...formData, url: e.target.value })}
-              />
-            </div>
-          </>
+          <div className="form-group">
+            <label>Website URL</label>
+            <input
+              type="url"
+              placeholder="https://example.com"
+              value={formData.url}
+              onChange={(e) => setFormData({ ...formData, url: e.target.value })}
+            />
+          </div>
         )
       case 'text':
         return (
-          <>
-            <div className="form-group">
-              <label>Plain Text</label>
-              <textarea
-                className="form-input"
-                placeholder="Enter your text..."
-                value={formData.text}
-                onChange={(e) => setFormData({ ...formData, text: e.target.value })}
-              />
-            </div>
-          </>
+          <div className="form-group">
+            <label>Plain Text</label>
+            <textarea
+              rows={4}
+              placeholder="Enter your text..."
+              value={formData.text}
+              onChange={(e) => setFormData({ ...formData, text: e.target.value })}
+            />
+          </div>
         )
       case 'email':
         return (
@@ -172,7 +167,6 @@ END:VCARD`
               <label>Email Address</label>
               <input
                 type="email"
-                className="form-input"
                 placeholder="email@example.com"
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
@@ -182,7 +176,6 @@ END:VCARD`
               <label>Subject (optional)</label>
               <input
                 type="text"
-                className="form-input"
                 placeholder="Email subject"
                 value={formData.emailSubject}
                 onChange={(e) => setFormData({ ...formData, emailSubject: e.target.value })}
@@ -191,7 +184,6 @@ END:VCARD`
             <div className="form-group">
               <label>Body (optional)</label>
               <textarea
-                className="form-input"
                 placeholder="Email body"
                 value={formData.emailBody}
                 onChange={(e) => setFormData({ ...formData, emailBody: e.target.value })}
@@ -206,7 +198,6 @@ END:VCARD`
               <label>Phone Number</label>
               <input
                 type="tel"
-                className="form-input"
                 placeholder="+1234567890"
                 value={formData.smsNumber}
                 onChange={(e) => setFormData({ ...formData, smsNumber: e.target.value })}
@@ -215,7 +206,6 @@ END:VCARD`
             <div className="form-group">
               <label>Message (optional)</label>
               <textarea
-                className="form-input"
                 placeholder="SMS message"
                 value={formData.smsMessage}
                 onChange={(e) => setFormData({ ...formData, smsMessage: e.target.value })}
@@ -230,7 +220,6 @@ END:VCARD`
               <label>Network Name (SSID)</label>
               <input
                 type="text"
-                className="form-input"
                 placeholder="WiFi Network Name"
                 value={formData.wifiSSID}
                 onChange={(e) => setFormData({ ...formData, wifiSSID: e.target.value })}
@@ -240,7 +229,6 @@ END:VCARD`
               <label>Password</label>
               <input
                 type="text"
-                className="form-input"
                 placeholder="WiFi Password"
                 value={formData.wifiPassword}
                 onChange={(e) => setFormData({ ...formData, wifiPassword: e.target.value })}
@@ -249,7 +237,6 @@ END:VCARD`
             <div className="form-group">
               <label>Encryption</label>
               <select
-                className="form-input select-input"
                 value={formData.wifiEncryption}
                 onChange={(e) => setFormData({ ...formData, wifiEncryption: e.target.value })}
               >
@@ -267,7 +254,6 @@ END:VCARD`
               <label>Name</label>
               <input
                 type="text"
-                className="form-input"
                 placeholder="John Doe"
                 value={formData.vcardName}
                 onChange={(e) => setFormData({ ...formData, vcardName: e.target.value })}
@@ -277,7 +263,6 @@ END:VCARD`
               <label>Phone</label>
               <input
                 type="tel"
-                className="form-input"
                 placeholder="+1234567890"
                 value={formData.vcardPhone}
                 onChange={(e) => setFormData({ ...formData, vcardPhone: e.target.value })}
@@ -287,30 +272,9 @@ END:VCARD`
               <label>Email</label>
               <input
                 type="email"
-                className="form-input"
                 placeholder="email@example.com"
                 value={formData.vcardEmail}
                 onChange={(e) => setFormData({ ...formData, vcardEmail: e.target.value })}
-              />
-            </div>
-            <div className="form-group">
-              <label>Organization (optional)</label>
-              <input
-                type="text"
-                className="form-input"
-                placeholder="Company Name"
-                value={formData.vcardOrg}
-                onChange={(e) => setFormData({ ...formData, vcardOrg: e.target.value })}
-              />
-            </div>
-            <div className="form-group">
-              <label>Title (optional)</label>
-              <input
-                type="text"
-                className="form-input"
-                placeholder="Job Title"
-                value={formData.vcardTitle}
-                onChange={(e) => setFormData({ ...formData, vcardTitle: e.target.value })}
               />
             </div>
           </>
@@ -319,120 +283,99 @@ END:VCARD`
   }
 
   return (
-    <div>
-      <div className="page-header">
-        <h2>QR Code Generator</h2>
-        <p>Create QR codes for various purposes</p>
+    <div className="container tool-container">
+      <div className="tool-header">
+        <h1>Advanced <span className="gradient-text">QR Generator</span></h1>
+        <p>Generate high-quality QR codes for any purpose.</p>
       </div>
 
-      <div className="tab-buttons">
-        {(['url', 'text', 'email', 'sms', 'wifi', 'vcard'] as QRType[]).map((type) => (
-          <button
-            key={type}
-            className={`tab-btn ${qrType === type ? 'active' : ''}`}
-            onClick={() => setQrType(type)}
-          >
-            {type === 'url' && 'URL'}
-            {type === 'text' && 'Text'}
-            {type === 'email' && 'Email'}
-            {type === 'sms' && 'SMS'}
-            {type === 'wifi' && 'WiFi'}
-            {type === 'vcard' && 'vCard'}
-          </button>
-        ))}
-      </div>
-
-      <div className="tool-layout">
-        <div className="tool-form">
-          <h3>Enter Data</h3>
-          {renderForm()}
+      <div className="card">
+        <div className="tabs">
+          {(['url', 'text', 'wifi', 'vcard', 'email', 'sms'] as QRType[]).map((type) => (
+            <button
+              key={type}
+              className={`tab ${qrType === type ? 'active' : ''}`}
+              onClick={() => setQrType(type)}
+            >
+              <i className={`fa-solid ${
+                type === 'url' ? 'fa-link' : 
+                type === 'text' ? 'fa-align-left' : 
+                type === 'wifi' ? 'fa-wifi' : 
+                type === 'vcard' ? 'fa-address-card' : 
+                type === 'email' ? 'fa-envelope' : 'fa-comment'
+              }`}></i> &nbsp;
+              {type.toUpperCase()}
+            </button>
+          ))}
         </div>
 
-        <div className="preview-panel">
-          <h3>Preview</h3>
-          <div className="qr-preview">
-            {qrSvgUrl ? (
-              <img src={qrSvgUrl} alt="QR Code" width={size} height={size} />
-            ) : (
-              <div style={{ width: size, height: size, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                Generating...
-              </div>
-            )}
-          </div>
+        <div className="qr-section">
+          <div className="qr-inputs">
+            <h3>Enter Data</h3>
+            <div style={{ marginTop: '1rem' }}>
+              {renderForm()}
+            </div>
 
-          <h3 style={{ marginTop: 20, marginBottom: 12 }}>Options</h3>
-          <div className="form-group" style={{ marginBottom: 12 }}>
-            <label>Colors</label>
-            <div className="qr-options">
-              <div className="color-input-wrapper">
-                <div className="color-preview" style={{ backgroundColor: fgColor }}>
-                  <input
-                    type="color"
-                    className="color-picker-input"
-                    value={fgColor}
-                    onChange={(e) => setFgColor(e.target.value)}
-                  />
-                </div>
-                <span style={{ color: '#9ca3af', fontSize: 14 }}>Foreground</span>
+            <hr style={{ margin: '2rem 0', border: 0, borderTop: '1px solid var(--border-color)' }} />
+            
+            <h3>Customization</h3>
+            <div className="color-inputs" style={{ marginTop: '1rem' }}>
+              <div className="form-group">
+                <label>Foreground</label>
+                <input
+                  type="color"
+                  value={fgColor}
+                  onChange={(e) => setFgColor(e.target.value)}
+                  style={{ height: '40px', padding: '2px' }}
+                />
               </div>
-              <div className="color-input-wrapper">
-                <div className="color-preview" style={{ backgroundColor: bgColor }}>
-                  <input
-                    type="color"
-                    className="color-picker-input"
-                    value={bgColor}
-                    onChange={(e) => setBgColor(e.target.value)}
-                  />
-                </div>
-                <span style={{ color: '#9ca3af', fontSize: 14 }}>Background</span>
+              <div className="form-group">
+                <label>Background</label>
+                <input
+                  type="color"
+                  value={bgColor}
+                  onChange={(e) => setBgColor(e.target.value)}
+                  style={{ height: '40px', padding: '2px' }}
+                />
               </div>
+            </div>
+
+            <div className="form-group">
+              <label>Size</label>
+              <select
+                value={size}
+                onChange={(e) => setSize(Number(e.target.value))}
+              >
+                <option value={128}>128 × 128</option>
+                <option value={256}>256 × 256</option>
+                <option value={512}>512 × 512</option>
+                <option value={1024}>1024 × 1024</option>
+              </select>
             </div>
           </div>
 
-          <div className="form-group" style={{ marginBottom: 12 }}>
-            <label>Size</label>
-            <select
-              className="form-input select-input"
-              value={size}
-              onChange={(e) => setSize(Number(e.target.value))}
-            >
-              <option value={128}>128 × 128</option>
-              <option value={256}>256 × 256</option>
-              <option value={512}>512 × 512</option>
-              <option value={1024}>1024 × 1024</option>
-            </select>
-          </div>
-
-          <div className="form-group" style={{ marginBottom: 20 }}>
-            <label>Error Correction</label>
-            <select
-              className="form-input select-input"
-              value={errorLevel}
-              onChange={(e) => setErrorLevel(e.target.value as 'L' | 'M' | 'Q' | 'H')}
-            >
-              <option value="L">Low (7%)</option>
-              <option value="M">Medium (15%)</option>
-              <option value="Q">Quartile (25%)</option>
-              <option value="H">High (30%)</option>
-            </select>
-          </div>
-
-          <div className="btn-group">
-            <button id="download-png-btn" className="btn btn-primary" onClick={downloadPNG}>
-              Download PNG
+          <div className="qr-preview-container">
+            <div id="qrcode">
+              {qrSvgUrl ? (
+                <img src={qrSvgUrl} alt="QR Code" width={size > 256 ? 256 : size} height={size > 256 ? 256 : size} />
+              ) : (
+                <div style={{ width: 256, height: 256, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  Generating...
+                </div>
+              )}
+            </div>
+            <button className="btn btn-primary" style={{ width: '100%', marginTop: '1.5rem' }} onClick={downloadPNG}>
+              <i className="fa-solid fa-download"></i> &nbsp; Download PNG
             </button>
-            <button id="download-svg-btn" className="btn btn-secondary" onClick={downloadSVG}>
-              Download SVG
+            <button className="btn" style={{ width: '100%', marginTop: '0.5rem', background: '#f3f4f6' }} onClick={downloadSVG}>
+               Download SVG
             </button>
           </div>
         </div>
       </div>
 
       {toast && (
-        <div className="toast success">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <polyline points="20 6 9 17 4 12" />
-          </svg>
+        <div className="toast">
           {toast}
         </div>
       )}

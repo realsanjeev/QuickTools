@@ -7,74 +7,12 @@
     <title>QuickTools | Professional Utility Suite</title>
     <meta name="description"
         content="A premium suite of web-based tools including QR generator, text formatting, and more.">
-    <link rel="stylesheet" href="assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body>
-    <header>
-        <div class="container nav-content">
-            <a href="index.html" class="logo">QuickTools</a>
-            <nav>
-                <a href="#tools" class="btn">Browse Tools</a>
-            </nav>
-        </div>
-    </header>
-
-    <main>
-        <section class="hero">
-            <div class="container">
-                <h1>The Ultimate <span class="gradient-text">Utility Toolbox</span></h1>
-                <p>A collection of high-quality, privacy-focused tools for your daily digital needs. No tracking, just
-                    speed.</p>
-            </div>
-        </section>
-
-        <section id="tools" class="container" style="padding-bottom: 5rem;">
-            <div class="tool-grid">
-                <!-- QR Generator -->
-                <div class="tool-card">
-                    <div class="tool-icon">
-                        <i class="fa-solid fa-qrcode"></i>
-                    </div>
-                    <h3>Advanced QR Generator</h3>
-                    <p>Create professional QR codes for URLs, WiFi, Contact Cards, and more. Customize colors and add
-                        logos.</p>
-                    <a href="tools/qr-generator/index.html" class="btn btn-primary">Open Tool</a>
-                </div>
-
-                <!-- Bold Text -->
-                <div class="tool-card">
-                    <div class="tool-icon">
-                        <i class="fa-solid fa-bold"></i>
-                    </div>
-                    <h3>Facebook Bold Text</h3>
-                    <p>Transform your text into bold, italic, and stylish Unicode fonts perfect for social media posts.
-                    </p>
-                    <a href="tools/bold-text/index.html" class="btn btn-primary">Open Tool</a>
-                </div>
-
-                <!-- Placeholder for future tools -->
-                <div class="tool-card" style="opacity: 0.6; border-style: dashed;">
-                    <div class="tool-icon" style="background: #e5e7eb; color: #9ca3af;">
-                        <i class="fa-solid fa-plus"></i>
-                    </div>
-                    <h3>More Coming Soon</h3>
-                    <p>We are constantly adding new tools to help you work faster. Stay tuned for updates!</p>
-                    <button class="btn" disabled style="background: #e5e7eb; color: #9ca3af; cursor: not-allowed;">Stay
-                        Tuned</button>
-                </div>
-            </div>
-        </section>
-    </main>
-
-    <footer style="padding: 3rem 0; border-top: 1px solid var(--border-color); text-align: center;">
-        <div class="container">
-            <p style="color: var(--text-muted);">&copy; 2026 QuickTools by <a href="https://bhandarisanjeev.com.np/"
-                    target="_blank" class="gradient-text" style="font-weight: 600;">(@RealSanjeev) Sanjeev Bhandari</a>
-            </p>
-        </div>
-    </footer>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
 </body>
 
 </html>

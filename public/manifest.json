@@ -2,7 +2,7 @@
   "name": "QuickTools",
   "short_name": "QuickTools",
   "description": "Free online utility tools including QR code generator, bold text converter, and more.",
-  "start_url": "https://realsanjeev.github.io/QuickTools/",
+  "start_url": ".",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#10b981",

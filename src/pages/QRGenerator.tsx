@@ -8,7 +8,7 @@ export default function QRGenerator() {
   const [fgColor, setFgColor] = useState('#000000')
   const [bgColor, setBgColor] = useState('#ffffff')
   const [size, setSize] = useState(256)
-  const [errorLevel, setErrorLevel] = useState<'L' | 'M' | 'Q' | 'H'>('M')
+  const [errorLevel] = useState<'L' | 'M' | 'Q' | 'H'>('M')
   const [toast, setToast] = useState('')
   const [qrSvgUrl, setQrSvgUrl] = useState('')
   

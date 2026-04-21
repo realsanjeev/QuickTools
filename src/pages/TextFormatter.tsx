@@ -71,7 +71,8 @@ export default function TextFormatter() {
 
     if (searchQuery) {
       keys = keys.filter(key => 
-        styleNames[key].toLowerCase().includes(searchQuery.toLowerCase())
+        styleNames[key].toLowerCase().includes(searchQuery.toLowerCase()) ||
+        key.toLowerCase().includes(searchQuery.toLowerCase())
       )
     }
 

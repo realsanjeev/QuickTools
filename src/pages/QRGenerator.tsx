@@ -33,15 +33,17 @@ export default function QRGenerator() {
   const generateQRData = useCallback(() => {
     switch (qrType) {
       case 'url':
-        return formData.url || 'https://example.com'
+        return formData.url || 'https://bhandarisanjeev.com.np'
       case 'text':
         return formData.text || 'Hello World'
       case 'email':
         return `mailto:${formData.email}${formData.emailSubject ? `?subject=${encodeURIComponent(formData.emailSubject)}` : ''}${formData.emailBody ? `&body=${encodeURIComponent(formData.emailBody)}` : ''}`
       case 'sms':
         return `sms:${formData.smsNumber}${formData.smsMessage ? `?body=${encodeURIComponent(formData.smsMessage)}` : ''}`
-      case 'wifi':
-        return `WIFI:T:${formData.wifiEncryption};S:${formData.wifiSSID};P:${formData.wifiPassword};;`
+      case 'wifi': {
+        const escape = (str: string) => str.replace(/([\\;":])/g, '\\$1')
+        return `WIFI:T:${formData.wifiEncryption};S:${escape(formData.wifiSSID)};P:${escape(formData.wifiPassword)};;`
+      }
       case 'vcard':
         return `BEGIN:VCARD
 VERSION:3.0
@@ -52,14 +54,16 @@ ORG:${formData.vcardOrg}
 TITLE:${formData.vcardTitle}
 END:VCARD`
       default:
-        return 'https://example.com'
+        return 'https://bhandarisanjeev.com.np'
     }
   }, [qrType, formData])
 
   const qrData = generateQRData()
 
   useEffect(() => {
+    let active = true
     let currentSvgUrl = ''
+
     const generateSvg = async () => {
       try {
         const svg = await QRCode.toString(qrData, {
@@ -71,14 +75,26 @@ END:VCARD`
           },
           errorCorrectionLevel: errorLevel,
         })
-        currentSvgUrl = URL.createObjectURL(new Blob([svg], { type: 'image/svg+xml' }))
+        
+        const newUrl = URL.createObjectURL(new Blob([svg], { type: 'image/svg+xml' }))
+        
+        if (!active) {
+          URL.revokeObjectURL(newUrl)
+          return
+        }
+
+        currentSvgUrl = newUrl
         setQrSvgUrl(currentSvgUrl)
       } catch (err) {
-        console.error('QR generation error:', err)
+        if (active) {
+          console.error('QR generation error:', err)
+        }
       }
     }
+
     generateSvg()
     return () => {
+      active = false
       if (currentSvgUrl) URL.revokeObjectURL(currentSvgUrl)
     }
   }, [qrData, size, fgColor, bgColor, errorLevel])

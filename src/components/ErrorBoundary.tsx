@@ -30,7 +30,7 @@ class ErrorBoundary extends Component<Props, State> {
         <div style={{ 
           padding: '2rem', 
           textAlign: 'center', 
-          background: 'var(--card-bg)', 
+          background: 'var(--bg-card)', 
           borderRadius: 'var(--radius-lg)',
           margin: '2rem auto',
           maxWidth: '600px',

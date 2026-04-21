@@ -9,7 +9,7 @@ import './App.css'
 function App() {
   return (
     <ErrorBoundary>
-      <BrowserRouter>
+      <BrowserRouter basename="/QuickTools/">
         <Routes>
           <Route path="/" element={<Layout />}>
             <Route index element={<Home />} />

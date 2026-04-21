@@ -23,11 +23,11 @@ export default function Layout() {
         <Outlet />
       </main>
 
-      <footer style={{ padding: '3rem 0', borderTop: '1px solid var(--border-color)', textAlign: 'center' }}>
+      <footer className="footer">
         <div className="container">
-          <p style={{ color: 'var(--text-muted)' }}>
+          <p className="footer-text">
             &copy; 2026 QuickTools by <a href="https://bhandarisanjeev.com.np/"
-              target="_blank" rel="noopener noreferrer" className="gradient-text" style={{ fontWeight: 600 }}>(@RealSanjeev) Sanjeev Bhandari</a>
+              target="_blank" rel="noopener noreferrer" className="footer-link">(@RealSanjeev) Sanjeev Bhandari</a>
           </p>
         </div>
       </footer>

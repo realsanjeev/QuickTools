@@ -59,6 +59,7 @@ END:VCARD`
   const qrData = generateQRData()
 
   useEffect(() => {
+    let currentSvgUrl = ''
     const generateSvg = async () => {
       try {
         const svg = await QRCode.toString(qrData, {
@@ -70,15 +71,15 @@ END:VCARD`
           },
           errorCorrectionLevel: errorLevel,
         })
-        const url = URL.createObjectURL(new Blob([svg], { type: 'image/svg+xml' }))
-        setQrSvgUrl(url)
+        currentSvgUrl = URL.createObjectURL(new Blob([svg], { type: 'image/svg+xml' }))
+        setQrSvgUrl(currentSvgUrl)
       } catch (err) {
         console.error('QR generation error:', err)
       }
     }
     generateSvg()
     return () => {
-      if (qrSvgUrl) URL.revokeObjectURL(qrSvgUrl)
+      if (currentSvgUrl) URL.revokeObjectURL(currentSvgUrl)
     }
   }, [qrData, size, fgColor, bgColor, errorLevel])
 
@@ -92,7 +93,9 @@ END:VCARD`
     const link = document.createElement('a')
     link.href = qrSvgUrl
     link.download = 'qr-code.svg'
+    document.body.appendChild(link)
     link.click()
+    document.body.removeChild(link)
     showToast('SVG downloaded!')
   }
 
@@ -116,9 +119,13 @@ END:VCARD`
       canvas.toBlob((blob) => {
         if (!blob) return
         const link = document.createElement('a')
-        link.href = URL.createObjectURL(blob)
+        const url = URL.createObjectURL(blob)
+        link.href = url
         link.download = 'qr-code.png'
+        document.body.appendChild(link)
         link.click()
+        document.body.removeChild(link)
+        URL.revokeObjectURL(url)
       }, 'image/png')
       
       showToast('PNG downloaded!')
@@ -411,10 +418,10 @@ END:VCARD`
           </div>
 
           <div className="btn-group">
-            <button className="btn btn-primary" onClick={downloadPNG}>
+            <button id="download-png-btn" className="btn btn-primary" onClick={downloadPNG}>
               Download PNG
             </button>
-            <button className="btn btn-secondary" onClick={downloadSVG}>
+            <button id="download-svg-btn" className="btn btn-secondary" onClick={downloadSVG}>
               Download SVG
             </button>
           </div>

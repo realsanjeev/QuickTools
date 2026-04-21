@@ -256,11 +256,22 @@
         // Download PNG
         downloadBtn.addEventListener("click", () => {
             const img = qrcodeContainer.querySelector("img");
-            if (img) {
+            const canvas = qrcodeContainer.querySelector("canvas");
+            let dataUrl = "";
+
+            if (img && img.src) {
+                dataUrl = img.src;
+            } else if (canvas) {
+                dataUrl = canvas.toDataURL("image/png");
+            }
+
+            if (dataUrl) {
                 const link = document.createElement("a");
-                link.href = img.src;
+                link.href = dataUrl;
                 link.download = "qrcode.png";
+                document.body.appendChild(link);
                 link.click();
+                document.body.removeChild(link);
             }
         });
 
@@ -274,22 +285,39 @@
                 height: 512,
                 colorDark: document.getElementById("qr-color-dark").value,
                 colorLight: document.getElementById("qr-color-light").value,
-                useSVG: true
+                useSVG: true,
+                correctLevel: QRCode.CorrectLevel.H
             };
             const tempDiv = document.createElement("div");
+            tempDiv.style.display = "none";
+            document.body.appendChild(tempDiv);
+            
             new QRCode(tempDiv, options);
-            setTimeout(() => {
+            
+            // Wait for SVG to be rendered
+            let attempts = 0;
+            const checkSvg = setInterval(() => {
                 const svg = tempDiv.querySelector("svg");
-                const svgData = new XMLSerializer().serializeToString(svg);
-                const svgBlob = new Blob([svgData], {type: "image/svg+xml;charset=utf-8"});
-                const svgUrl = URL.createObjectURL(svgBlob);
-                const downloadLink = document.createElement("a");
-                downloadLink.href = svgUrl;
-                downloadLink.download = "qrcode.svg";
-                document.body.appendChild(downloadLink);
-                downloadLink.click();
-                document.body.removeChild(downloadLink);
-            }, 100);
+                attempts++;
+                if (svg) {
+                    clearInterval(checkSvg);
+                    const svgData = new XMLSerializer().serializeToString(svg);
+                    const svgBlob = new Blob([svgData], {type: "image/svg+xml;charset=utf-8"});
+                    const svgUrl = URL.createObjectURL(svgBlob);
+                    const downloadLink = document.createElement("a");
+                    downloadLink.href = svgUrl;
+                    downloadLink.download = "qrcode.svg";
+                    document.body.appendChild(downloadLink);
+                    downloadLink.click();
+                    document.body.removeChild(downloadLink);
+                    URL.revokeObjectURL(svgUrl);
+                    document.body.removeChild(tempDiv);
+                } else if (attempts > 40) { // Timeout after 2 seconds (40 * 50ms)
+                    clearInterval(checkSvg);
+                    document.body.removeChild(tempDiv);
+                    alert("SVG generation timed out. Please try again.");
+                }
+            }, 50);
         });
 
         // Initial Generate

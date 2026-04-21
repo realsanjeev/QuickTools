@@ -1,0 +1,16 @@
+{
+  "name": "QuickTools",
+  "short_name": "QuickTools",
+  "description": "Free online utility tools including QR code generator, bold text converter, and more.",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#10b981",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}

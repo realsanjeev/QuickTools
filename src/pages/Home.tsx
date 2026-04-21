@@ -21,7 +21,7 @@ export default function Home() {
             <h3>Advanced QR Generator</h3>
             <p>Create professional QR codes for URLs, WiFi, Contact Cards, and more. Customize colors and add
               logos.</p>
-            <Link to="/qr-generator" className="btn btn-primary">Open Tool</Link>
+            <Link to="/qr-generator" className="btn btn-primary" aria-label="Open Advanced QR Generator tool">Open Tool</Link>
           </div>
 
           {/* Bold Text */}
@@ -32,7 +32,7 @@ export default function Home() {
             <h3>Facebook Bold Text</h3>
             <p>Transform your text into bold, italic, and stylish Unicode fonts perfect for social media posts.
             </p>
-            <Link to="/text-formatter" className="btn btn-primary">Open Tool</Link>
+            <Link to="/text-formatter" className="btn btn-primary" aria-label="Open Facebook Bold Text formatter tool">Open Tool</Link>
           </div>
 
           {/* Placeholder for future tools */}

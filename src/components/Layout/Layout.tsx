@@ -1,4 +1,4 @@
-import { Link, NavLink, Outlet, useLocation } from 'react-router-dom'
+import { Link, Outlet, useLocation } from 'react-router-dom'
 
 export default function Layout() {
   const location = useLocation()
@@ -26,8 +26,8 @@ export default function Layout() {
       <footer className="footer">
         <div className="container">
           <p className="footer-text">
-            &copy; 2026 QuickTools by <a href="https://bhandarisanjeev.com.np/"
-              target="_blank" rel="noopener noreferrer" className="footer-link">(@RealSanjeev) Sanjeev Bhandari</a>
+            &copy; 2026 QuickTools by <a href="https://realsanjeev.github.io/"
+              target="_blank" rel="noopener noreferrer" className="footer-link">@RealSanjeev</a>
           </p>
         </div>
       </footer>

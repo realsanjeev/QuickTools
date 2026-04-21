@@ -3,7 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Advanced QR Generator | QuickTools</title>
+    <title>QR Code Generator - Free Online QR Code Maker | QuickTools</title>
+    <meta name="description" content="Generate QR codes instantly for free. Create custom QR codes with logo, colors, and high resolution. Works in browser - no download needed.">
+    <meta name="keywords" content="QR code generator, QR code maker, free QR code, custom QR code, QR code with logo, online QR code generator">
+    <meta name="author" content="QuickTools">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://realsanjeev.github.io/QuickTools/tools/qr-generator/">
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="QR Code Generator - Free Online QR Code Maker">
+    <meta property="og:description" content="Generate QR codes instantly for free. Create custom QR codes with logo, colors, and high resolution.">
+
+    <link rel="icon" type="image/svg+xml" href="../../favicon.svg">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' blob:; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' https://cdnjs.cloudflare.com https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self';">
     <link rel="stylesheet" href="../../assets/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -87,33 +100,33 @@
                     <!-- URL Input -->
                     <div id="input-url" class="qr-input-group">
                         <div class="form-group">
-                            <label>Website URL</label>
-                            <input type="url" id="qr-url" placeholder="https://example.com" value="https://bhandarisanjeev.com.np">
+                            <label for="qr-url">Website URL</label>
+                            <input type="url" id="qr-url" name="qr-url" placeholder="https://example.com" value="https://bhandarisanjeev.com.np">
                         </div>
                     </div>
 
                     <!-- Text Input -->
                     <div id="input-text" class="qr-input-group" style="display:none;">
                         <div class="form-group">
-                            <label>Plain Text</label>
-                            <textarea id="qr-text" rows="4" placeholder="Enter your text here..."></textarea>
+                            <label for="qr-text">Plain Text</label>
+                            <textarea id="qr-text" name="qr-text" rows="4" placeholder="Enter your text here..."></textarea>
                         </div>
                     </div>
 
                     <!-- WiFi Input -->
                     <div id="input-wifi" class="qr-input-group" style="display:none;">
                         <div class="form-group">
-                            <label>Network Name (SSID)</label>
-                            <input type="text" id="wifi-ssid" placeholder="MyWiFiNetwork">
+                            <label for="wifi-ssid">Network Name (SSID)</label>
+                            <input type="text" id="wifi-ssid" name="wifi-ssid" placeholder="MyWiFiNetwork">
                         </div>
                         <div class="form-group">
-                            <label>Password</label>
-                            <input type="text" id="wifi-pass" placeholder="Password">
+                            <label for="wifi-pass">Password</label>
+                            <input type="text" id="wifi-pass" name="wifi-pass" placeholder="Password">
                         </div>
                         <div class="form-group">
-                            <label>Encryption</label>
-                            <select id="wifi-enc">
-                                <option value="WPA">WPA/WPA2</option>
+                            <label for="wifi-enc">Encryption</label>
+                            <select id="wifi-enc" name="wifi-enc" aria-label="WiFi Encryption">
+                                <option value="WPA" selected>WPA/WPA2</option>
                                 <option value="WEP">WEP</option>
                                 <option value="nopass">None</option>
                             </select>
@@ -123,16 +136,16 @@
                     <!-- vCard Input -->
                     <div id="input-vcard" class="qr-input-group" style="display:none;">
                         <div class="form-group">
-                            <label>Full Name</label>
-                            <input type="text" id="vc-name" placeholder="John Doe">
+                            <label for="vc-name">Full Name</label>
+                            <input type="text" id="vc-name" name="vc-name" placeholder="John Doe">
                         </div>
                         <div class="form-group">
-                            <label>Phone</label>
-                            <input type="text" id="vc-phone" placeholder="+1234567890">
+                            <label for="vc-phone">Phone</label>
+                            <input type="tel" id="vc-phone" name="vc-phone" placeholder="+1234567890">
                         </div>
                         <div class="form-group">
-                            <label>Email</label>
-                            <input type="text" id="vc-email" placeholder="john@example.com">
+                            <label for="vc-email">Email</label>
+                            <input type="email" id="vc-email" name="vc-email" placeholder="john@example.com">
                         </div>
                     </div>
 
@@ -141,18 +154,18 @@
                     <h3>Customization</h3>
                     <div class="color-inputs" style="margin-top: 1rem;">
                         <div class="form-group">
-                            <label>Foreground Color</label>
-                            <input type="color" id="qr-color-dark" value="#000000">
+                            <label for="qr-color-dark">Foreground Color</label>
+                            <input type="color" id="qr-color-dark" name="qr-color-dark" value="#000000">
                         </div>
                         <div class="form-group">
-                            <label>Background Color</label>
-                            <input type="color" id="qr-color-light" value="#ffffff">
+                            <label for="qr-color-light">Background Color</label>
+                            <input type="color" id="qr-color-light" name="qr-color-light" value="#ffffff">
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label>Logo (Optional)</label>
-                        <input type="file" id="qr-logo" accept="image/*">
+                        <label for="qr-logo">Logo (Optional)</label>
+                        <input type="file" id="qr-logo" name="qr-logo" accept="image/*">
                         <small style="color: var(--text-muted);">Recommended: Square PNG with transparent background.</small>
                     </div>
                 </div>

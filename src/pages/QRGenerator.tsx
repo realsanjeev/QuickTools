@@ -251,6 +251,7 @@ END:VCARD`
               <label htmlFor="qrWifiEncryption">Encryption</label>
               <select
                 id="qrWifiEncryption"
+                name="qrWifiEncryption"
                 value={formData.wifiEncryption}
                 onChange={(e) => setFormData({ ...formData, wifiEncryption: e.target.value })}
               >
@@ -361,18 +362,22 @@ END:VCARD`
             <h3>Customization</h3>
             <div className="color-inputs" style={{ marginTop: '1rem' }}>
               <div className="form-group">
-                <label>Foreground</label>
+                <label htmlFor="qr-fg-color">Foreground</label>
                 <input
                   type="color"
+                  id="qr-fg-color"
+                  name="qr-fg-color"
                   value={fgColor}
                   onChange={(e) => setFgColor(e.target.value)}
                   style={{ height: '40px', padding: '2px' }}
                 />
               </div>
               <div className="form-group">
-                <label>Background</label>
+                <label htmlFor="qr-bg-color">Background</label>
                 <input
                   type="color"
+                  id="qr-bg-color"
+                  name="qr-bg-color"
                   value={bgColor}
                   onChange={(e) => setBgColor(e.target.value)}
                   style={{ height: '40px', padding: '2px' }}
@@ -381,8 +386,10 @@ END:VCARD`
             </div>
 
             <div className="form-group">
-              <label>Size</label>
+              <label htmlFor="qr-size">Size</label>
               <select
+                id="qr-size"
+                name="qr-size"
                 value={size}
                 onChange={(e) => setSize(Number(e.target.value))}
               >

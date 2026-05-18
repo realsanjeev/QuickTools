@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://realsanjeev.github.io/QuickTools/sitemap.xml
+Sitemap: https://bhandarisanjeev.com.np/QuickTools/sitemap.xml

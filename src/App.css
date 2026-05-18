@@ -6,6 +6,19 @@
     --primary-gradient: linear-gradient(135deg, var(--primary-emerald), var(--primary-cyan));
     --bg-light: #f9fafb;
     --bg-card: rgba(255, 255, 255, 0.8);
+    --bg-card-solid: #ffffff;
+    --bg-header: rgba(255, 255, 255, 0.85);
+    --bg-tab: #f3f4f6;
+    --bg-tab-btn: #f1f5f9;
+    --bg-input: #ffffff;
+    --border-input: #e5e7eb;
+    --bg-preview: #f8fafc;
+    --border-preview: #cbd5e1;
+    --bg-footer: #ffffff;
+    --bg-result-item: #ffffff;
+    --bg-copy-btn: #f1f5f9;
+    --bg-copy-btn-hover: #e2e8f0;
+    
     --text-main: #111827;
     --text-muted: #6b7280;
     --border-color: rgba(229, 231, 235, 0.5);
@@ -15,6 +28,30 @@
     --radius-lg: 0.75rem;
     --radius-xl: 1rem;
     --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.dark {
+    --bg-light: #0f172a;
+    --bg-card: rgba(30, 41, 59, 0.8);
+    --bg-card-solid: #1e293b;
+    --bg-header: rgba(15, 23, 42, 0.85);
+    --bg-tab: #1e293b;
+    --bg-tab-btn: #1e293b;
+    --bg-input: #1e293b;
+    --border-input: #334155;
+    --bg-preview: #1e293b;
+    --border-preview: #475569;
+    --bg-footer: #0f172a;
+    --bg-result-item: #1e293b;
+    --bg-copy-btn: #334155;
+    --bg-copy-btn-hover: #475569;
+    
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --border-color: rgba(51, 65, 85, 0.5);
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.3);
 }
 
 * {
@@ -80,7 +117,7 @@ button {
 
 /* Header & Nav */
 header {
-    background: rgba(255, 255, 255, 0.85);
+    background: var(--bg-header);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border-bottom: 1px solid var(--border-color);
@@ -235,7 +272,7 @@ header {
 }
 
 .card {
-    background: white;
+    background: var(--bg-card-solid);
     border-radius: var(--radius-xl);
     padding: clamp(1.25rem, 5vw, 2.5rem);
     box-shadow: var(--shadow-md);
@@ -262,11 +299,11 @@ textarea,
 select {
     width: 100%;
     padding: 0.875rem 1rem;
-    border: 1.5px solid #e5e7eb;
+    border: 1.5px solid var(--border-input);
     border-radius: 12px;
     font-size: 1rem;
     transition: var(--transition);
-    background-color: #fff;
+    background-color: var(--bg-input);
     color: var(--text-main);
 }
 
@@ -295,7 +332,7 @@ select:focus {
 
 .tab {
     padding: 0.625rem 1.25rem;
-    background: #f3f4f6;
+    background: var(--bg-tab);
     border-radius: 100px;
     font-size: 0.875rem;
     font-weight: 600;
@@ -305,7 +342,7 @@ select:focus {
 }
 
 .tab:hover {
-    background: #e5e7eb;
+    background: var(--bg-copy-btn-hover);
 }
 
 .tab.active {
@@ -322,10 +359,10 @@ select:focus {
 }
 
 .qr-preview-container {
-    background: #f8fafc;
+    background: var(--bg-preview);
     padding: 2rem;
     border-radius: var(--radius-xl);
-    border: 1px dashed #cbd5e1;
+    border: 1px dashed var(--border-preview);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -385,7 +422,7 @@ select:focus {
     display: flex;
     flex-direction: column;
     padding: 1.5rem;
-    background: white;
+    background: var(--bg-result-item);
     border-radius: var(--radius-xl);
     border: 1px solid var(--border-color);
     transition: var(--transition);
@@ -422,7 +459,7 @@ select:focus {
 .result-item .btn-copy-mini {
     margin-top: auto;
     width: 100%;
-    background: #f1f5f9;
+    background: var(--bg-copy-btn);
     color: var(--text-main);
     padding: 0.625rem;
     border-radius: 10px;
@@ -435,7 +472,7 @@ select:focus {
 }
 
 .result-item .btn-copy-mini:hover {
-    background: #e2e8f0;
+    background: var(--bg-copy-btn-hover);
 }
 
 .result-item .btn-copy-mini i {
@@ -458,7 +495,7 @@ select:focus {
 
 .tab-btn {
     padding: 0.6rem 1.25rem;
-    background: #f1f5f9;
+    background: var(--bg-tab-btn);
     border-radius: 100px;
     font-size: 0.9rem;
     font-weight: 600;
@@ -468,7 +505,7 @@ select:focus {
 }
 
 .tab-btn:hover {
-    background: #e2e8f0;
+    background: var(--bg-copy-btn-hover);
 }
 
 .tab-btn.active {
@@ -482,7 +519,7 @@ select:focus {
     padding: 4rem 0;
     border-top: 1px solid var(--border-color);
     text-align: center;
-    background: white;
+    background: var(--bg-footer);
 }
 
 .footer-text {
@@ -579,4 +616,117 @@ select:focus {
         transition-duration: 0.01ms !important;
         scroll-behavior: auto !important;
     }
+}
+
+/* Navigation Controls Wrapper */
+.nav-controls {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+}
+
+/* ModeToggle & Tailwind Utility Emulations in Vanilla CSS */
+.h-10 {
+  height: 2.5rem;
+}
+.w-10 {
+  width: 2.5rem;
+}
+.relative {
+  position: relative;
+}
+.absolute {
+  position: absolute;
+}
+.h-5 {
+  height: 1.25rem;
+}
+.w-5 {
+  width: 1.25rem;
+}
+.rotate-0 {
+  transform: rotate(0deg);
+}
+.scale-100 {
+  transform: scale(1);
+}
+.transition-all {
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.scale-0 {
+  transform: scale(0);
+}
+.rotate-90 {
+  transform: rotate(90deg);
+}
+.pointer-events-none {
+  pointer-events: none;
+}
+
+/* Dark utility variants */
+html.dark .dark\:scale-0 {
+  transform: scale(0) !important;
+}
+html.dark .dark\:-rotate-90 {
+  transform: rotate(-90deg) !important;
+}
+html.dark .dark\:scale-100 {
+  transform: scale(1) !important;
+}
+html.dark .dark\:rotate-0 {
+  transform: rotate(0deg) !important;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* Custom UI Button Styling */
+.ui-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-lg);
+  font-weight: 500;
+  transition: var(--transition);
+  cursor: pointer;
+  outline: none;
+  border: none;
+  background: transparent;
+  width: auto;
+}
+
+.ui-button-ghost {
+  color: var(--text-main);
+}
+.ui-button-ghost:hover {
+  background-color: var(--bg-tab);
+}
+
+.ui-button-icon {
+  padding: 0;
+  border-radius: 50%;
+  aspect-ratio: 1/1;
+}
+
+/* Adjust colors for specific elements under dark mode */
+html.dark select option {
+  background-color: #1e293b;
+  color: #f8fafc;
+}
+html.dark input[type="color"] {
+  background-color: #0f172a;
+  border-color: #334155;
+}
+html.dark .tab.active,
+html.dark .tab-btn.active {
+  color: white;
 }

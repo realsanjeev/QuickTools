@@ -726,7 +726,9 @@ html.dark input[type="color"] {
   background-color: #0f172a;
   border-color: #334155;
 }
-html.dark .tab.active,
-html.dark .tab-btn.active {
+html.dark .tab.active {
   color: white;
+}
+html.dark .tab-btn.active {
+  color: #0f172a;
 }

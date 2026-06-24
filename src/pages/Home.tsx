@@ -1,8 +1,11 @@
 import { Link } from 'react-router-dom'
+import JsonLd from '../components/JsonLd'
+import { getHomeSchema } from '../utils/seo'
 
 export default function Home() {
   return (
     <>
+      <JsonLd schema={getHomeSchema()} />
       <section className="hero">
         <div className="container">
           <h1>The Ultimate <span className="gradient-text">Utility Toolbox</span></h1>
@@ -33,6 +36,16 @@ export default function Home() {
             <p>Transform your text into bold, italic, and stylish Unicode fonts perfect for social media posts.
             </p>
             <Link to="/text-formatter" className="btn btn-primary" aria-label="Open Facebook Bold Text formatter tool">Open Tool</Link>
+          </div>
+
+          {/* AI Text Humanizer */}
+          <div className="tool-card">
+            <div className="tool-icon">
+              <i className="fa-solid fa-wand-magic-sparkles"></i>
+            </div>
+            <h3>AI Text Humanizer</h3>
+            <p>Detect and replace common LLM jargon and em-dashes to make text sound more human and natural.</p>
+            <Link to="/ai-text-humanizer" className="btn btn-primary" aria-label="Open AI Text Humanizer tool">Open Tool</Link>
           </div>
 
           {/* Placeholder for future tools */}

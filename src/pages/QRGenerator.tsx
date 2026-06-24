@@ -1,5 +1,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import * as QRCode from 'qrcode'
+import JsonLd from '../components/JsonLd'
+import { getQrGeneratorSchema } from '../utils/seo'
 
 type QRType = 'url' | 'text' | 'email' | 'sms' | 'wifi' | 'vcard'
 
@@ -338,6 +340,7 @@ END:VCARD`
 
   return (
     <div className="container tool-container">
+      <JsonLd schema={getQrGeneratorSchema()} />
       <div className="tool-header">
         <h1>Advanced <span className="gradient-text">QR Generator</span></h1>
         <p>Generate high-quality QR codes for any purpose.</p>

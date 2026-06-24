@@ -1,5 +1,7 @@
 import { useState, useMemo, memo } from 'react'
 import { applyStyle, styleNames } from '../utils/unicodeStyles'
+import JsonLd from '../components/JsonLd'
+import { getTextFormatterSchema } from '../utils/seo'
 
 const styleKeys = Object.keys(styleNames) as string[]
 
@@ -81,6 +83,7 @@ export default function TextFormatter() {
 
   return (
     <div className="container tool-container">
+      <JsonLd schema={getTextFormatterSchema()} />
       <div className="tool-header">
         <h1>Text <span className="gradient-text">Formatter</span></h1>
         <p>Transform your text with professional unicode styles for social media.</p>

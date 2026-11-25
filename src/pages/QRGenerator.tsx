@@ -13,7 +13,7 @@ export default function QRGenerator() {
   const [errorLevel] = useState<'L' | 'M' | 'Q' | 'H'>('M')
   const [toast, setToast] = useState('')
   const [qrSvgUrl, setQrSvgUrl] = useState('')
-  
+
   const [formData, setFormData] = useState({
     url: '',
     text: '',
@@ -77,9 +77,9 @@ END:VCARD`
           },
           errorCorrectionLevel: errorLevel,
         })
-        
+
         const newUrl = URL.createObjectURL(new Blob([svg], { type: 'image/svg+xml' }))
-        
+
         if (!active) {
           URL.revokeObjectURL(newUrl)
           return
@@ -145,7 +145,7 @@ END:VCARD`
         document.body.removeChild(link)
         URL.revokeObjectURL(url)
       }, 'image/png')
-      
+
       showToast('PNG downloaded!')
     } catch (err) {
       console.error('PNG download error:', err)
@@ -164,9 +164,12 @@ END:VCARD`
               placeholder="https://example.com"
               value={formData.url}
               onChange={(e) => setFormData({ ...formData, url: e.target.value })}
-              required
             />
-            {!formData.url && <small style={{ color: 'var(--primary)', opacity: 0.7 }}>URL is required for generation</small>}
+            {!formData.url && (
+              <small className="field-hint">
+                Showing default preview (bhandarisanjeev.com.np) — enter a URL above to customize.
+              </small>
+            )}
           </div>
         )
       case 'text':
@@ -179,9 +182,12 @@ END:VCARD`
               placeholder="Enter your text..."
               value={formData.text}
               onChange={(e) => setFormData({ ...formData, text: e.target.value })}
-              required
             />
-            {!formData.text && <small style={{ color: 'var(--primary)', opacity: 0.7 }}>Text is required for generation</small>}
+            {!formData.text && (
+              <small className="field-hint">
+                Showing default preview ("Hello World") — type any text above to update live.
+              </small>
+            )}
           </div>
         )
       case 'email':
@@ -342,12 +348,14 @@ END:VCARD`
     <div className="container tool-container">
       <JsonLd schema={getQrGeneratorSchema()} />
       <div className="tool-header">
-        <h1>Advanced <span className="gradient-text">QR Generator</span></h1>
-        <p>Generate high-quality QR codes for any purpose.</p>
+        <h1>
+          Advanced <span className="gradient-text">QR Generator</span>
+        </h1>
+        <p>Generate high-resolution SVG and PNG QR codes for any purpose.</p>
       </div>
 
       <div className="card">
-        <div className="tabs">
+        <div className="tabs" role="tablist" aria-label="QR Code Content Type">
           {(['url', 'text', 'wifi', 'vcard', 'email', 'sms'] as QRType[]).map((type) => (
             <button
               key={type}
@@ -357,65 +365,72 @@ END:VCARD`
               aria-selected={qrType === type}
               role="tab"
             >
-              <i className={`fa-solid ${
-                type === 'url' ? 'fa-link' : 
-                type === 'text' ? 'fa-align-left' : 
-                type === 'wifi' ? 'fa-wifi' : 
-                type === 'vcard' ? 'fa-address-card' : 
-                type === 'email' ? 'fa-envelope' : 'fa-comment'
-              }`} aria-hidden="true"></i> &nbsp;
-              {type.toUpperCase()}
+              <i
+                className={`fa-solid ${
+                  type === 'url'
+                    ? 'fa-link'
+                    : type === 'text'
+                      ? 'fa-align-left'
+                      : type === 'wifi'
+                        ? 'fa-wifi'
+                        : type === 'vcard'
+                          ? 'fa-address-card'
+                          : type === 'email'
+                            ? 'fa-envelope'
+                            : 'fa-comment'
+                }`}
+                aria-hidden="true"
+              ></i>
+              <span>{type.toUpperCase()}</span>
             </button>
           ))}
         </div>
 
         <div className="qr-section">
           <div className="qr-inputs">
-            <h3>Enter Data</h3>
-            <div style={{ marginTop: '1rem' }}>
-              {renderForm()}
-            </div>
+            <h3 className="section-subtitle">Enter Data</h3>
+            {renderForm()}
 
-            <hr style={{ margin: '2rem 0', border: 0, borderTop: '1px solid var(--border-color)' }} />
-            
-            <h3>Customization</h3>
-            <div className="color-inputs" style={{ marginTop: '1rem' }}>
+            <hr className="section-divider" />
+
+            <h3 className="section-subtitle">Customization</h3>
+            <div className="color-inputs">
               <div className="form-group">
-                <label htmlFor="qr-fg-color">Foreground</label>
+                <label htmlFor="qr-fg-color">Foreground Color</label>
                 <input
                   type="color"
                   id="qr-fg-color"
                   name="qr-fg-color"
+                  className="color-picker-input"
                   value={fgColor}
                   onChange={(e) => setFgColor(e.target.value)}
-                  style={{ height: '40px', padding: '2px' }}
                 />
               </div>
               <div className="form-group">
-                <label htmlFor="qr-bg-color">Background</label>
+                <label htmlFor="qr-bg-color">Background Color</label>
                 <input
                   type="color"
                   id="qr-bg-color"
                   name="qr-bg-color"
+                  className="color-picker-input"
                   value={bgColor}
                   onChange={(e) => setBgColor(e.target.value)}
-                  style={{ height: '40px', padding: '2px' }}
                 />
               </div>
             </div>
 
             <div className="form-group">
-              <label htmlFor="qr-size">Size</label>
+              <label htmlFor="qr-size">Export Resolution</label>
               <select
                 id="qr-size"
                 name="qr-size"
                 value={size}
                 onChange={(e) => setSize(Number(e.target.value))}
               >
-                <option value={128}>128 × 128</option>
-                <option value={256}>256 × 256</option>
-                <option value={512}>512 × 512</option>
-                <option value={1024}>1024 × 1024</option>
+                <option value={128}>128 × 128 px</option>
+                <option value={256}>256 × 256 px</option>
+                <option value={512}>512 × 512 px</option>
+                <option value={1024}>1024 × 1024 px</option>
               </select>
             </div>
           </div>
@@ -423,25 +438,35 @@ END:VCARD`
           <div className="qr-preview-container">
             <div id="qrcode">
               {qrSvgUrl ? (
-                <img src={qrSvgUrl} alt="QR Code" width={size > 256 ? 256 : size} height={size > 256 ? 256 : size} />
+                <img
+                  src={qrSvgUrl}
+                  alt="Generated QR Code Preview"
+                  width={size > 256 ? 256 : size}
+                  height={size > 256 ? 256 : size}
+                />
               ) : (
-                <div style={{ width: 256, height: 256, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <div className="qr-loading">
                   Generating...
                 </div>
               )}
             </div>
-            <button className="btn btn-primary" style={{ width: '100%', marginTop: '1.5rem' }} onClick={downloadPNG}>
-              <i className="fa-solid fa-download"></i> &nbsp; Download PNG
-            </button>
-            <button className="btn" style={{ width: '100%', marginTop: '0.5rem', background: '#f3f4f6' }} onClick={downloadSVG}>
-               Download SVG
-            </button>
+            <div className="qr-actions">
+              <button className="btn btn-primary btn-block" onClick={downloadPNG}>
+                <i className="fa-solid fa-download" aria-hidden="true"></i>
+                <span>Download PNG</span>
+              </button>
+              <button className="btn btn-secondary btn-block" onClick={downloadSVG}>
+                <i className="fa-solid fa-code" aria-hidden="true"></i>
+                <span>Download Vector SVG</span>
+              </button>
+            </div>
           </div>
         </div>
       </div>
 
       {toast && (
-        <div className="toast">
+        <div className="toast" role="status">
+          <i className="fa-solid fa-circle-check" aria-hidden="true"></i>
           {toast}
         </div>
       )}

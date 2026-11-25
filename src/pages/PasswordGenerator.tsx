@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useState } from 'react'
 import JsonLd from '../components/JsonLd'
 import { getPasswordGeneratorSchema } from '../utils/seo'
 
@@ -46,8 +46,8 @@ const strengthOf = (password: string, poolSize: number) => {
   const entropy = password.length * Math.log2(poolSize)
   if (entropy < 40) return { label: 'Weak', segments: 1, color: '#ef4444', entropy }
   if (entropy < 60) return { label: 'Medium', segments: 2, color: '#f59e0b', entropy }
-  if (entropy < 80) return { label: 'Strong', segments: 3, color: '#22c55e', entropy }
-  return { label: 'Very Strong', segments: 4, color: '#16a34a', entropy }
+  if (entropy < 80) return { label: 'Strong', segments: 3, color: '#10b981', entropy }
+  return { label: 'Very Strong', segments: 4, color: '#059669', entropy }
 }
 
 const charClass = (ch: string) => {
@@ -64,7 +64,14 @@ export default function PasswordGenerator() {
     numbers: true,
     symbols: true,
   })
-  const [password, setPassword] = useState('')
+  const [password, setPassword] = useState(() =>
+    generate(16, {
+      uppercase: true,
+      lowercase: true,
+      numbers: true,
+      symbols: true,
+    })
+  )
   const [toast, setToast] = useState('')
 
   const poolSize = (Object.keys(SETS) as SetKey[]).filter((k) => selected[k])
@@ -75,10 +82,6 @@ export default function PasswordGenerator() {
     setPassword(generate(length, selected))
   }, [length, selected])
 
-  useEffect(() => {
-    regenerate()
-  }, [regenerate])
-
   const copy = async () => {
     if (!password) return
     await navigator.clipboard.writeText(password)
@@ -86,7 +89,16 @@ export default function PasswordGenerator() {
     setTimeout(() => setToast(''), 3000)
   }
 
-  const toggle = (key: SetKey) => setSelected({ ...selected, [key]: !selected[key] })
+  const toggle = (key: SetKey) => {
+    const nextSelected = { ...selected, [key]: !selected[key] }
+    setSelected(nextSelected)
+    setPassword(generate(length, nextSelected))
+  }
+
+  const handleLengthChange = (nextLength: number) => {
+    setLength(nextLength)
+    setPassword(generate(nextLength, selected))
+  }
 
   return (
     <div className="container tool-container">
@@ -104,10 +116,10 @@ export default function PasswordGenerator() {
               : <span className="pw-empty">Select at least one character type below</span>}
           </div>
           <div className="pw-output-actions">
-            <button className="pw-btn-copy" onClick={copy} disabled={!password} aria-label="Copy password">
-              <i className="fa-solid fa-copy" aria-hidden="true"></i> Copy
+            <button className="btn btn-primary pw-action-copy" onClick={copy} disabled={!password} aria-label="Copy password">
+              <i className="fa-solid fa-copy" aria-hidden="true"></i> Copy Password
             </button>
-            <button className="pw-btn-regen" onClick={regenerate} aria-label="Generate new password">
+            <button className="btn btn-secondary" onClick={regenerate} aria-label="Generate new password">
               <i className="fa-solid fa-rotate" aria-hidden="true"></i> Regenerate
             </button>
           </div>
@@ -151,7 +163,7 @@ export default function PasswordGenerator() {
             min={4}
             max={64}
             value={length}
-            onChange={(e) => setLength(Number(e.target.value))}
+            onChange={(e) => handleLengthChange(Number(e.target.value))}
             aria-label="Password length"
           />
           <span className="pw-length-value">{length}</span>
@@ -163,7 +175,12 @@ export default function PasswordGenerator() {
         </div>
       </div>
 
-      {toast && <div className="toast">{toast}</div>}
+      {toast && (
+        <div className="toast" role="status">
+          <i className="fa-solid fa-circle-check" aria-hidden="true"></i>
+          {toast}
+        </div>
+      )}
     </div>
   )
 }

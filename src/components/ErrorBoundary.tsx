@@ -27,25 +27,19 @@ class ErrorBoundary extends Component<Props, State> {
   public render() {
     if (this.state.hasError) {
       return this.props.fallback || (
-        <div style={{ 
-          padding: '2rem', 
-          textAlign: 'center', 
-          background: 'var(--bg-card)', 
-          borderRadius: 'var(--radius-lg)',
-          margin: '2rem auto',
-          maxWidth: '600px',
-          boxShadow: 'var(--shadow-lg)'
-        }}>
-          <h2 style={{ color: 'var(--primary)' }}>Oops, something went wrong.</h2>
-          <p style={{ color: 'var(--text-muted)', marginBottom: '1.5rem' }}>
-            We're sorry for the inconvenience. Please try refreshing the page.
-          </p>
-          <button 
-            className="btn btn-primary"
-            onClick={() => window.location.reload()}
-          >
-            Refresh Page
-          </button>
+        <div className="container tool-container">
+          <div className="card error-boundary-card" role="alert">
+            <h2>Oops, something went wrong.</h2>
+            <p>
+              We encountered an unexpected error. Please try refreshing the page.
+            </p>
+            <button
+              className="btn btn-primary"
+              onClick={() => window.location.reload()}
+            >
+              Refresh Page
+            </button>
+          </div>
         </div>
       );
     }

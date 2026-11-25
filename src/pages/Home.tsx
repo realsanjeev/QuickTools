@@ -8,67 +8,90 @@ export default function Home() {
       <JsonLd schema={getHomeSchema()} />
       <section className="hero">
         <div className="container">
-          <h1>The Ultimate <span className="gradient-text">Utility Toolbox</span></h1>
-          <p>A collection of high-quality, privacy-focused tools for your daily digital needs. No tracking, just
-            speed.</p>
+          <span className="hero-badge">
+            <i className="fa-solid fa-shield-halved" aria-hidden="true"></i>
+            Privacy-First Browser Utilities
+          </span>
+          <h1>
+            The Ultimate <span className="gradient-text">Utility Toolbox</span>
+          </h1>
+          <p>
+            A fast, zero-tracking suite of developer and content tools that run 100% locally in your browser.
+          </p>
         </div>
       </section>
 
-      <section id="tools" className="container" style={{ paddingBottom: '5rem' }}>
+      <section id="tools" className="container tools-section">
         <div className="tool-grid">
           {/* QR Generator */}
-          <div className="tool-card">
+          <article className="tool-card">
             <div className="tool-icon">
-              <i className="fa-solid fa-qrcode"></i>
+              <i className="fa-solid fa-qrcode" aria-hidden="true"></i>
             </div>
             <h3>Advanced QR Generator</h3>
-            <p>Create professional QR codes for URLs, WiFi, Contact Cards, and more. Customize colors and add
-              logos.</p>
-            <Link to="/qr-generator" className="btn btn-primary" aria-label="Open Advanced QR Generator tool">Open Tool</Link>
-          </div>
+            <p>
+              Create high-resolution SVG and PNG QR codes for URLs, WiFi networks, Contact Cards (vCard), Email, and SMS with custom colors.
+            </p>
+            <Link to="/qr-generator" className="btn btn-primary" aria-label="Open Advanced QR Generator tool">
+              Open Tool
+            </Link>
+          </article>
 
           {/* Bold Text */}
-          <div className="tool-card">
+          <article className="tool-card">
             <div className="tool-icon">
-              <i className="fa-solid fa-bold"></i>
+              <i className="fa-solid fa-bold" aria-hidden="true"></i>
             </div>
-            <h3>Facebook Bold Text</h3>
-            <p>Transform your text into bold, italic, and stylish Unicode fonts perfect for social media posts.
+            <h3>Unicode Text Formatter</h3>
+            <p>
+              Transform plain text into bold, italic, script, gothic, and monospace Unicode styles ready to copy for social media posts.
             </p>
-            <Link to="/text-formatter" className="btn btn-primary" aria-label="Open Facebook Bold Text formatter tool">Open Tool</Link>
-          </div>
+            <Link to="/text-formatter" className="btn btn-primary" aria-label="Open Unicode Text Formatter tool">
+              Open Tool
+            </Link>
+          </article>
 
           {/* AI Text Humanizer */}
-          <div className="tool-card">
+          <article className="tool-card">
             <div className="tool-icon">
-              <i className="fa-solid fa-wand-magic-sparkles"></i>
+              <i className="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i>
             </div>
             <h3>AI Text Humanizer</h3>
-            <p>Detect and replace common LLM jargon and em-dashes to make text sound more human and natural.</p>
-            <Link to="/ai-text-humanizer" className="btn btn-primary" aria-label="Open AI Text Humanizer tool">Open Tool</Link>
-          </div>
+            <p>
+              Detect and normalize LLM typography quirks—including em-dashes, smart quotes, and hidden zero-width characters—in one click.
+            </p>
+            <Link to="/ai-text-humanizer" className="btn btn-primary" aria-label="Open AI Text Humanizer tool">
+              Open Tool
+            </Link>
+          </article>
 
           {/* Password Generator */}
-          <div className="tool-card">
+          <article className="tool-card">
             <div className="tool-icon">
-              <i className="fa-solid fa-key"></i>
+              <i className="fa-solid fa-key" aria-hidden="true"></i>
             </div>
             <h3>Random Password Generator</h3>
-            <p>Generate strong, secure random passwords with custom length and character sets. Runs fully in
-              your browser.</p>
-            <Link to="/password-generator" className="btn btn-primary" aria-label="Open Random Password Generator tool">Open Tool</Link>
-          </div>
+            <p>
+              Generate cryptographically secure passwords with custom length, character pools, and real-time entropy scoring in your browser.
+            </p>
+            <Link to="/password-generator" className="btn btn-primary" aria-label="Open Random Password Generator tool">
+              Open Tool
+            </Link>
+          </article>
 
           {/* Placeholder for future tools */}
-          <div className="tool-card" style={{ opacity: 0.6, borderStyle: 'dashed' }}>
-            <div className="tool-icon" style={{ background: '#e5e7eb', color: '#9ca3af' }}>
-              <i className="fa-solid fa-plus"></i>
+          <article className="tool-card tool-card-placeholder">
+            <div className="tool-icon tool-icon-muted">
+              <i className="fa-solid fa-plus" aria-hidden="true"></i>
             </div>
-            <h3>More Coming Soon</h3>
-            <p>We are constantly adding new tools to help you work faster. Stay tuned for updates!</p>
-            <button className="btn" disabled style={{ background: '#e5e7eb', color: '#9ca3af', cursor: 'not-allowed' }}>Stay
-              Tuned</button>
-          </div>
+            <h3>More Utilities Coming Soon</h3>
+            <p>
+              New client-side tools are regularly added to help you format, inspect, and ship faster without leaving your browser.
+            </p>
+            <button className="btn btn-disabled" disabled>
+              Stay Tuned
+            </button>
+          </article>
         </div>
       </section>
     </>

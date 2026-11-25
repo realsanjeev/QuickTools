@@ -5,26 +5,63 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>QuickTools - Free Online Utility Tools | QR Generator, Text Formatter & More</title>
-    <meta name="description" content="Free online utility tools including QR code generator, bold text converter, text formatter, and more. All tools are free, fast, and work directly in your browser.">
-    <meta name="keywords" content="QR code generator, bold text, text formatter, online tools, free tools, web tools, utility suite, text converter">
+    <meta name="description" content="Free online utility tools including QR code generator, bold text converter, text formatter, AI text humanizer, and password generator. All tools run locally in your browser.">
+    <meta name="keywords" content="QR code generator, bold text, text formatter, password generator, AI text humanizer, online tools, free tools, web tools">
     <meta name="author" content="Sanjeev Bhandari (@realsanjeev)">
     <meta name="robots" content="index, follow">
+    <meta name="color-scheme" content="dark light">
+    <meta name="theme-color" content="#059669" media="(prefers-color-scheme: light)">
+    <meta name="theme-color" content="#022c22" media="(prefers-color-scheme: dark)">
     <link rel="canonical" href="https://bhandarisanjeev.com.np/QuickTools/" />
+
+    <!-- Synchronous dark-mode detection to prevent FOUC -->
+    <script>
+      (function () {
+        try {
+          var stored = localStorage.getItem('quicktools-theme');
+          var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          if (stored === 'dark' || (stored !== 'light' && prefersDark)) {
+            document.documentElement.classList.add('dark');
+          } else {
+            document.documentElement.classList.remove('dark');
+          }
+        } catch (_) {}
+      })();
+    </script>
+
+    <!-- Single Page Apps for GitHub Pages URL restoration -->
+    <script type="text/javascript">
+      (function (l) {
+        if (l.search[1] === 'p') {
+          var query = {};
+          l.search.slice(1).split('&').forEach(function (v) {
+            var item = v.split('=');
+            query[item[0]] = item.slice(1).join('=').replace(/~and~/g, '&');
+          });
+          if (query.p !== undefined) {
+            window.history.replaceState(null, null,
+              l.pathname.slice(0, -1) + (query.p || '') +
+              (query.q ? ('?' + query.q) : '') +
+              l.hash
+            );
+          }
+        }
+      }(window.location));
+    </script>
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://realsanjeev.github.io/QuickTools/">
-    <meta property="
-    og:title" content="QuickTools - Free Online Utility Tools">
-    <meta property="og:description" content="Free online utility tools including QR code generator, bold text converter, text formatter, and more.">
-    <meta property="og:image" content="https://realsanjeev.github.io/QuickTools/icon-192.png">
+    <meta property="og:url" content="https://bhandarisanjeev.com.np/QuickTools/">
+    <meta property="og:title" content="QuickTools - Free Online Utility Tools">
+    <meta property="og:description" content="Free privacy-first browser utilities: Advanced QR Generator, Unicode Text Formatter, AI Text Humanizer, and Random Password Generator.">
+    <meta property="og:image" content="https://bhandarisanjeev.com.np/QuickTools/icon-192.png">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://realsanjeev.github.io/QuickTools/">
+    <meta property="twitter:url" content="https://bhandarisanjeev.com.np/QuickTools/">
     <meta property="twitter:title" content="QuickTools - Free Online Utility Tools">
-    <meta property="twitter:description" content="Free online utility tools including QR code generator, bold text converter, text formatter, and more.">
-    <meta property="twitter:image" content="https://realsanjeev.github.io/QuickTools/icon-192.png">
+    <meta property="twitter:description" content="Free privacy-first browser utilities: Advanced QR Generator, Unicode Text Formatter, AI Text Humanizer, and Random Password Generator.">
+    <meta property="twitter:image" content="https://bhandarisanjeev.com.np/QuickTools/icon-192.png">
 
     <!-- Favicon -->
     <link rel="icon" href="/favicon.ico">
@@ -33,30 +70,31 @@
     <!-- PWA -->
     <link rel="manifest" href="/manifest.json">
 
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' blob:; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' https://cdnjs.cloudflare.com https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self';">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' blob: https://www.googletagmanager.com; style-src 'self' 'unsafe-inline' https://cdnjs.cloudflare.com https://fonts.googleapis.com; font-src 'self' https://cdnjs.cloudflare.com https://fonts.gstatic.com; img-src 'self' data: blob: https://www.google-analytics.com https://www.googletagmanager.com; connect-src 'self' https://www.google-analytics.com https://analytics.google.com https://region1.google-analytics.com https://stats.g.doubleclick.net;">
     <!-- Preconnect -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="preconnect" href="https://cdnjs.cloudflare.com">
 
     <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
     <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"></noscript>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-2SZXCRWYXC"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-2SZXCRWYXC');
+    </script>
 </head>
 
 <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
 </body>
-
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-2SZXCRWYXC"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-2SZXCRWYXC');
-</script>
 
 </html>

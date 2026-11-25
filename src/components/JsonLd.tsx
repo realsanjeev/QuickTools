@@ -5,7 +5,8 @@ export default function JsonLd({ schema }: { schema: object | object[] }) {
 
   useEffect(() => {
     const scripts: HTMLScriptElement[] = []
-    const items = Array.isArray(schema) ? schema : [schema]
+    const parsed = JSON.parse(schemaJson) as object | object[]
+    const items = Array.isArray(parsed) ? parsed : [parsed]
 
     for (const item of items) {
       const script = document.createElement('script')

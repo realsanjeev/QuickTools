@@ -17,7 +17,7 @@ const aiReplacements: Record<string, string> = {
   "\u200D": "", // zero-width joiner
   "\uFEFF": "", // zero-width no-break space
   "\u00A0": " ", // no-break space
-  "\u202F": " " // narrow no-break space
+  "\u202F": " ", // narrow no-break space
 }
 
 const getDisplayKey = (key: string) => {
@@ -36,15 +36,15 @@ const getDisplayKey = (key: string) => {
     "\u200D": "[U+200D Zero-width Joiner]",
     "\uFEFF": "[U+FEFF Zero-width No-break Space]",
     "\u00A0": "[U+00A0 No-break Space]",
-    "\u202F": "[U+202F Narrow No-break Space]"
-  };
-  return displayNames[key] || key;
+    "\u202F": "[U+202F Narrow No-break Space]",
+  }
+  return displayNames[key] || key
 }
 
 const getDisplayValue = (val: string) => {
-  if (val === "") return "[Removed]";
-  if (val === " ") return "[Space]";
-  return val;
+  if (val === "") return "[Removed]"
+  if (val === " ") return "[Space]"
+  return val
 }
 
 export default function AiTextDetector() {
@@ -58,29 +58,24 @@ export default function AiTextDetector() {
 
   const { outputText, replacementCounts, totalReplacementsCount } = useMemo(() => {
     if (!inputText) return { outputText: '', replacementCounts: {}, totalReplacementsCount: 0 }
-    
+
     let result = inputText
     const counts: Record<string, number> = {}
     let total = 0
-    
-    // Sort keys by length descending so longer phrases get replaced first
+
     const sortedKeys = Object.keys(aiReplacements).sort((a, b) => b.length - a.length)
-    
+
     for (const key of sortedKeys) {
-      // Use direct match for non-word characters (punctuation, spaces, zero-width chars)
       const isPunctuation = /^[^\w]+$/.test(key)
-      
-      // Use word boundaries for words, but not for punctuation like dashes
       const regexStr = isPunctuation ? key : `\\b${key}\\b`
       const regex = new RegExp(regexStr, 'gi')
-      
+
       const matches = result.match(regex)
       if (matches) {
         counts[key] = matches.length
         total += matches.length
         result = result.replace(regex, (match) => {
           const replacement = aiReplacements[key]
-          // Simple capitalization preservation for the first letter if it's a word
           if (!isPunctuation && match.charAt(0) === match.charAt(0).toUpperCase()) {
             return replacement.charAt(0).toUpperCase() + replacement.slice(1)
           }
@@ -88,7 +83,7 @@ export default function AiTextDetector() {
         })
       }
     }
-    
+
     return { outputText: result, replacementCounts: counts, totalReplacementsCount: total }
   }, [inputText])
 
@@ -98,28 +93,33 @@ export default function AiTextDetector() {
       return
     }
 
-    navigator.clipboard.writeText(outputText).then(() => {
-      showToast('Copied to clipboard!')
-    }).catch(() => {
-      showToast('Failed to copy!')
-    })
+    navigator.clipboard
+      .writeText(outputText)
+      .then(() => {
+        showToast('Copied to clipboard!')
+      })
+      .catch(() => {
+        showToast('Failed to copy!')
+      })
   }
 
   return (
     <div className="container tool-container">
       <JsonLd schema={getAiTextHumanizerSchema()} />
       <div className="tool-header">
-        <h1>AI Text <span className="gradient-text">Humanizer</span></h1>
-        <p>Detect and replace common LLM formatting quirks (like em-dashes and zero-width spaces) to make text cleaner.</p>
+        <h1>
+          AI Text <span className="gradient-text">Humanizer</span>
+        </h1>
+        <p>
+          Detect and replace common LLM formatting quirks (em-dashes, curly quotes, and zero-width spaces) to make text clean.
+        </p>
       </div>
 
-      <div className="card" style={{ marginBottom: '2rem' }}>
-        <div className="form-group" style={{ marginBottom: '1.5rem' }}>
-          <label htmlFor="inputText" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            Input AI Generated Text
-            <span style={{ fontSize: '0.85rem', color: 'var(--text-muted)', fontWeight: 'normal' }}>
-              {inputText.length} characters
-            </span>
+      <div className="card">
+        <div className="form-group">
+          <label htmlFor="inputText" className="label-row">
+            <span>Input AI-Generated Text</span>
+            <span className="char-counter">{inputText.length} characters</span>
           </label>
           <textarea
             id="inputText"
@@ -127,73 +127,70 @@ export default function AiTextDetector() {
             placeholder="Paste your AI-generated text here..."
             value={inputText}
             onChange={(e) => setInputText(e.target.value)}
-            style={{ fontSize: '1rem', padding: '1.25rem', borderRadius: 'var(--radius-lg)' }}
           />
         </div>
 
         {totalReplacementsCount > 0 && (
-          <div style={{ marginBottom: '1rem', padding: '0.75rem 1rem', background: 'var(--bg-secondary)', borderRadius: 'var(--radius-md)', color: 'var(--text-primary)', borderLeft: '4px solid var(--primary)' }}>
-            <div style={{ marginBottom: '0.5rem' }}>
-              <strong>{totalReplacementsCount}</strong> formatting quirk(s) detected and replaced:
+          <div className="quirk-banner" role="status">
+            <div className="quirk-banner-title">
+              <strong>{totalReplacementsCount}</strong> formatting quirk(s) detected and normalized:
             </div>
-            <ul style={{ margin: 0, paddingLeft: '1.5rem', display: 'flex', flexDirection: 'column', gap: '0.25rem' }}>
+            <ul className="quirk-list">
               {Object.entries(replacementCounts).map(([key, count]) => (
                 <li key={key}>
-                  <code style={{ background: 'var(--bg-primary)', padding: '0.1rem 0.3rem', borderRadius: '4px' }}>{getDisplayKey(key)}</code> : <strong>{count as React.ReactNode}</strong>
+                  <code className="inline-code">{getDisplayKey(key)}</code> : <strong>{count}</strong>
                 </li>
               ))}
             </ul>
           </div>
         )}
 
-        <div className="form-group" style={{ marginBottom: '1rem' }}>
-          <label htmlFor="outputText" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            Humanized Output
+        <div className="form-group">
+          <label htmlFor="outputText" className="label-row">
+            <span>Cleaned &amp; Humanized Output</span>
           </label>
           <textarea
             id="outputText"
+            className="textarea-readonly"
             rows={6}
             readOnly
             value={outputText}
-            placeholder="Humanized text will appear here..."
-            style={{ fontSize: '1rem', padding: '1.25rem', borderRadius: 'var(--radius-lg)', background: 'var(--bg-secondary)', cursor: 'text' }}
+            placeholder="Normalized text will appear here..."
           />
         </div>
 
-        <button 
-          className="btn btn-primary" 
-          onClick={copyToClipboard}
-          style={{ width: '100%' }}
-        >
-          <i className="fa-solid fa-copy"></i> Copy Humanized Text
+        <button className="btn btn-primary btn-block" onClick={copyToClipboard}>
+          <i className="fa-solid fa-copy" aria-hidden="true"></i>
+          <span>Copy Humanized Text</span>
         </button>
       </div>
 
-      <div className="card info-card" style={{ marginBottom: '2rem', background: 'var(--bg-secondary)', borderLeft: '4px solid var(--primary)' }}>
-        <h3 style={{ marginBottom: '1rem', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-          <i className="fa-solid fa-circle-info"></i> About This Tool
+      <div className="card info-card">
+        <h3>
+          <i className="fa-solid fa-circle-info" aria-hidden="true"></i>
+          <span>About This Tool</span>
         </h3>
-        <p style={{ marginBottom: '1rem', lineHeight: '1.6' }}>
-          <strong>Disclaimer:</strong> This tool focuses on cleaning up formatting and typographical artifacts frequently generated by AI models. AI models tend to overuse specific dashes, smart quotes, and even inject invisible zero-width characters into their responses. This tool safely strips out or normalizes those hidden markers and quirky punctuation.
+        <p>
+          <strong>How it works:</strong> Large Language Models frequently emit typographic em-dashes, smart quotes, non-breaking spaces, and invisible zero-width Unicode markers. This tool strips and normalizes those artifacts locally in your browser.
         </p>
-        
-        <h4 style={{ marginBottom: '0.5rem' }}>Replacement Rules:</h4>
-        <div style={{ maxHeight: '250px', overflowY: 'auto', background: 'var(--bg-primary)', borderRadius: 'var(--radius-md)', border: '1px solid var(--border)' }}>
-          <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '0.9rem' }}>
-            <thead style={{ position: 'sticky', top: 0, background: 'var(--bg-secondary)', borderBottom: '1px solid var(--border)', zIndex: 1 }}>
+
+        <h4>Replacement Rules</h4>
+        <div className="rules-table-wrapper">
+          <table className="rules-table">
+            <thead>
               <tr>
-                <th style={{ padding: '0.75rem 1rem', fontWeight: 600, color: 'var(--text-primary)' }}>Detected Symbol</th>
-                <th style={{ padding: '0.75rem 1rem', fontWeight: 600, color: 'var(--text-primary)' }}>Action / Replacement</th>
+                <th>Detected Symbol</th>
+                <th>Action / Replacement</th>
               </tr>
             </thead>
             <tbody>
               {Object.entries(aiReplacements).map(([key, value]) => (
-                <tr key={key} style={{ borderBottom: '1px solid var(--border)' }}>
-                  <td style={{ padding: '0.75rem 1rem' }}>
-                    <code style={{ background: 'var(--bg-secondary)', padding: '0.2rem 0.4rem', borderRadius: '4px' }}>{getDisplayKey(key)}</code>
+                <tr key={key}>
+                  <td>
+                    <code className="inline-code">{getDisplayKey(key)}</code>
                   </td>
-                  <td style={{ padding: '0.75rem 1rem' }}>
-                    <code style={{ background: 'var(--bg-secondary)', padding: '0.2rem 0.4rem', borderRadius: '4px' }}>{getDisplayValue(value)}</code>
+                  <td>
+                    <code className="inline-code">{getDisplayValue(value)}</code>
                   </td>
                 </tr>
               ))}
@@ -204,6 +201,7 @@ export default function AiTextDetector() {
 
       {toast && (
         <div className="toast" role="alert">
+          <i className="fa-solid fa-circle-check" aria-hidden="true"></i>
           {toast}
         </div>
       )}

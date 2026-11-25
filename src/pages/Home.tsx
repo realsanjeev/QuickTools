@@ -48,6 +48,17 @@ export default function Home() {
             <Link to="/ai-text-humanizer" className="btn btn-primary" aria-label="Open AI Text Humanizer tool">Open Tool</Link>
           </div>
 
+          {/* Password Generator */}
+          <div className="tool-card">
+            <div className="tool-icon">
+              <i className="fa-solid fa-key"></i>
+            </div>
+            <h3>Random Password Generator</h3>
+            <p>Generate strong, secure random passwords with custom length and character sets. Runs fully in
+              your browser.</p>
+            <Link to="/password-generator" className="btn btn-primary" aria-label="Open Random Password Generator tool">Open Tool</Link>
+          </div>
+
           {/* Placeholder for future tools */}
           <div className="tool-card" style={{ opacity: 0.6, borderStyle: 'dashed' }}>
             <div className="tool-icon" style={{ background: '#e5e7eb', color: '#9ca3af' }}>

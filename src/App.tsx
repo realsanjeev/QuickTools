@@ -5,6 +5,7 @@ import Home from './pages/Home'
 import QRGenerator from './pages/QRGenerator'
 import TextFormatter from './pages/TextFormatter'
 import AiTextDetector from './pages/AiTextDetector'
+import PasswordGenerator from './pages/PasswordGenerator'
 import ErrorBoundary from './components/ErrorBoundary'
 import ScrollToTop from './components/ScrollToTop'
 import './App.css'
@@ -21,6 +22,7 @@ function App() {
               <Route path="qr-generator" element={<QRGenerator />} />
               <Route path="text-formatter" element={<TextFormatter />} />
               <Route path="ai-text-humanizer" element={<AiTextDetector />} />
+              <Route path="password-generator" element={<PasswordGenerator />} />
               <Route path="*" element={<Navigate to="/" replace />} />
             </Route>
           </Routes>

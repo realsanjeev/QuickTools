@@ -89,6 +89,27 @@ export function getTextFormatterSchema() {
   }
 }
 
+export function getPasswordGeneratorSchema() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'SoftwareApplication',
+    '@id': `${BASE_URL}/#password-generator`,
+    name: 'QuickTools Password Generator (@realsanjeev)',
+    description:
+      'Generate secure random passwords with customizable length and character sets, entirely in your browser.',
+    applicationCategory: 'WebApplication',
+    operatingSystem: 'All',
+    url: `${BASE_URL}/password-generator`,
+    author: { '@id': 'https://bhandarisanjeev.com.np/#person' },
+    offers: {
+      '@type': 'Offer',
+      price: '0',
+      priceCurrency: 'USD',
+    },
+    isAccessibleForFree: true,
+  }
+}
+
 export function getAiTextHumanizerSchema() {
   return {
     '@context': 'https://schema.org',
